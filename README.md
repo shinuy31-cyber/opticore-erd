@@ -1,5 +1,3 @@
-# opticore-erd## 📊 OptiCore ERD
-
 ```mermaid
 erDiagram
   AcademicPeriod ||--o{ ScheduleEntry : term
@@ -21,7 +19,7 @@ erDiagram
   Program ||--o{ Users : chairman
   Program ||--o{ StudentProfile : enrollment
 
-  Section ||--o{ ScheduleEntry : class
+  Section ||--o{ ScheduleEntry : section_class
   Section ||--o{ StudentProfile : roster
   Section ||--o{ FacultyProfile : advisory
 
