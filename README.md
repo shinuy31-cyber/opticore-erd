@@ -1,41 +1,60 @@
 ```mermaid
-erDiagram
-  AcademicPeriod ||--o{ ScheduleEntry : term
-  AcademicPeriod ||--o{ ScheduleLoadJustification : load_review
-  AcademicPeriod ||--o| DoiScheduleFinalization : publish
-  AcademicPeriod ||--o{ ScheduleChangeRequest : change_req
+classDiagram
 
-  College ||--o{ Program : has
-  College ||--o{ Room : optional_scope
-  College ||--o{ Users : staff_or_student
-  College ||--o{ ScheduleLoadJustification : per_college_term
-  College ||--o{ WorkflowInboxMessage : inbox
-  College ||--o{ AccessRequest : access
-  College ||--o{ AuditLog : scope
-  College ||--o{ ScheduleChangeRequest : routing
+class AcademicPeriod
+class College
+class Program
+class Section
+class Subject
+class Room
+class Users
+class FacultyProfile
+class StudentProfile
+class ScheduleEntry
+class ScheduleChangeRequest
+class ScheduleLoadJustification
+class DoiScheduleFinalization
+class Notification
+class WorkflowInboxMessage
+class AccessRequest
+class AuditLog
 
-  Program ||--o{ Section : sections
-  Program ||--o{ Subject : catalog
-  Program ||--o{ Users : chairman
-  Program ||--o{ StudentProfile : enrollment
+AcademicPeriod --> ScheduleEntry : term
+AcademicPeriod --> ScheduleLoadJustification : load_review
+AcademicPeriod --> DoiScheduleFinalization : publish
+AcademicPeriod --> ScheduleChangeRequest : change_req
 
-  Section ||--o{ ScheduleEntry : section_class
-  Section ||--o{ StudentProfile : roster
-  Section ||--o{ FacultyProfile : advisory
+College --> Program : has
+College --> Room : scope
+College --> Users : staff
+College --> ScheduleLoadJustification : per_term
+College --> WorkflowInboxMessage : inbox
+College --> AccessRequest : access
+College --> AuditLog : logs
+College --> ScheduleChangeRequest : routing
 
-  Users ||--|| FacultyProfile : faculty
-  Users ||--|| StudentProfile : student
-  Users ||--o{ ScheduleEntry : teaches
-  Users ||--o{ Notification : receives
-  Users ||--o{ ScheduleChangeRequest : reviewer
-  Users ||--o{ WorkflowInboxMessage : sender
-  Users ||--o{ AccessRequest : requester
-  Users ||--o{ AuditLog : actor
-  Users ||--o{ ScheduleLoadJustification : author
-  Users ||--o| DoiScheduleFinalization : decidedBy
+Program --> Section : sections
+Program --> Subject : catalog
+Program --> Users : chairman
+Program --> StudentProfile : enrollment
 
-  Subject ||--o{ ScheduleEntry : offering
-  Room ||--o{ ScheduleEntry : location
+Section --> ScheduleEntry : section_class
+Section --> StudentProfile : roster
+Section --> FacultyProfile : advisory
 
-  ScheduleEntry ||--o{ ScheduleChangeRequest : cascade
+Users --> FacultyProfile : faculty
+Users --> StudentProfile : student
+Users --> ScheduleEntry : teaches
+Users --> Notification : receives
+Users --> ScheduleChangeRequest : reviewer
+Users --> WorkflowInboxMessage : sender
+Users --> AccessRequest : requester
+Users --> AuditLog : actor
+Users --> ScheduleLoadJustification : author
+Users --> DoiScheduleFinalization : decides
+
+Subject --> ScheduleEntry : offering
+Room --> ScheduleEntry : location
+
+ScheduleEntry --> ScheduleChangeRequest : cascade
 ```
